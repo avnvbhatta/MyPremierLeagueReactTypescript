@@ -10,6 +10,8 @@ import {
   Route
 } from "react-router-dom";
 import NavBar from "./components/navbar/navbar"
+import Login from './components/login/login';
+import SignUp from './components/signup/signup';
 
 const App = () => {
   return (
@@ -17,6 +19,15 @@ const App = () => {
             <NavBar />
             <Switch>
               <Route exact path="/">
+                <Home />
+              </Route>
+              <Route path="/login">
+                <Login />
+              </Route>
+              <Route path="/signup">
+                <SignUp />
+              </Route>
+              {/* <Route path="/home">
                 <Home />
               </Route>
               <Route path="/home">
@@ -27,7 +38,7 @@ const App = () => {
               </Route>
               <Route path="/stats">
                 <Stats />
-              </Route>
+              </Route> */}
             </Switch>
         </Router>
   );
