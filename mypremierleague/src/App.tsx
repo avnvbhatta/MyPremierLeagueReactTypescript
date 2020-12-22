@@ -12,24 +12,34 @@ import {
 import NavBar from "./components/navbar/navbar"
 import Login from './components/login/login';
 import SignUp from './components/signup/signup';
+import {useToken} from './helpers/useToken';
+
 
 const App = () => {
+  const { token, setToken } = useToken();
+
+  if(token === null){
+    return (
+      <Router>
+          <Switch>
+            <Route path="/login">
+              <Login setToken={setToken}/>
+            </Route>
+            <Route path="/signup">
+              <SignUp />
+            </Route>
+            <Route path="/">
+              <Login setToken={setToken}/>
+            </Route>
+          </Switch>
+      </Router>
+    );
+  }
+
   return (
         <Router>
-            <NavBar />
+            <NavBar setToken={setToken}/>
             <Switch>
-              <Route exact path="/">
-                <Home />
-              </Route>
-              <Route path="/login">
-                <Login />
-              </Route>
-              <Route path="/signup">
-                <SignUp />
-              </Route>
-              {/* <Route path="/home">
-                <Home />
-              </Route>
               <Route path="/home">
                 <Home />
               </Route>
@@ -38,7 +48,7 @@ const App = () => {
               </Route>
               <Route path="/stats">
                 <Stats />
-              </Route> */}
+              </Route>
             </Switch>
         </Router>
   );

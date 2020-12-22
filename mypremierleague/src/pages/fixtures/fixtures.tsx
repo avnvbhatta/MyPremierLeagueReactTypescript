@@ -21,8 +21,8 @@ const Fixtures: React.FC<FixturesProps> = () => {
 
          
 
-        getCurrentGameWeekAsync();
-        getUpcomingEPLFixturesAsync();
+        // getCurrentGameWeekAsync();
+        // getUpcomingEPLFixturesAsync();
 
     }, [])
     return ( 

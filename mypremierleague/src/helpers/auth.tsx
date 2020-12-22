@@ -14,7 +14,7 @@ export interface ISignUpData {
 
 export const logIn = async(loginData: ILoginData) => {
     const {email, password} = loginData;
-    let response = await axios.post('https://mypremierleague-server.herokuapp.com/login', loginData)
+    let response = await axios.post('http://localhost:3008/login', loginData)
     return response;
 }
 

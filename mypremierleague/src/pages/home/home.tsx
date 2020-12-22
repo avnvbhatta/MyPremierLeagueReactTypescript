@@ -10,7 +10,7 @@ const Home: React.FC<HomeProps> = () => {
     return ( 
         <div>
             Home Page
-            <UpcomingFixtures />
+            {/* <UpcomingFixtures /> */}
 
         </div>
      );
