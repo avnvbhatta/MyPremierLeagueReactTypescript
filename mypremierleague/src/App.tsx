@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+import './App.scss';
 import Home from "./pages/home/home";
 import Fixtures from "./pages/fixtures/fixtures";
 import Stats from "./pages/stats/stats";

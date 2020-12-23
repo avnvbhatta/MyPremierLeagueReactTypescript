@@ -3,6 +3,7 @@ import { useState } from 'react';
 import {ILoginData, logIn} from "../../helpers/auth";
 import {Link, RouteComponentProps, withRouter} from "react-router-dom";
 import {IUserToken} from '../../helpers/useToken';
+import AppLogo from "../../images/applogo.svg";
 
 export interface LoginProps extends RouteComponentProps{
     setToken: (userToken: IUserToken) => void; 
@@ -34,17 +35,21 @@ const Login: React.FC<LoginProps> = (props) => {
         }
     }
     return ( 
-        <>
+        <div className="login-container">
+            <div className="logo">
+                <img src={AppLogo} alt="applogo"/>
+            </div>
             <form action="">
-                <input type="text" name="email" placeholder="email" onChange={e => setEmail(e.target.value)}/>
-                <input type="password" name="password" placeholder="password"  onChange={e => setPassword(e.target.value)}/>
+                <input type="text" name="email" placeholder="email" onChange={e => setEmail(e.target.value)} required/>
+                <input type="password" name="password" placeholder="password"  onChange={e => setPassword(e.target.value)} required/>
                 <button onClick={e => handleSubmit(e)}>Login</button>
+                <div>Don't have an account? <Link to="/signup">Sign Up</Link></div>
             </form>
-            <div>Don't have an account?<Link to="/signup">Sign Up</Link></div>
            
-        </>
+        </div>
         
      );
 }
+
  
 export default withRouter(Login);

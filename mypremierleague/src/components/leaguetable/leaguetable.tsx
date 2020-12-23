@@ -28,6 +28,7 @@ const LeagueTable: React.FC<LeagueTableProps> = () => {
             try{
                 let response: any = await getLeagueTable();
                 let tempLeagueTable: ILeagueTable[] = [];
+                
                 response.map(tableRow => {
                     let {rank, logo, teamName, forme, all: {matchsPlayed}, goalsDiff, points} = tableRow;
                     let tempRow: ILeagueTable = {

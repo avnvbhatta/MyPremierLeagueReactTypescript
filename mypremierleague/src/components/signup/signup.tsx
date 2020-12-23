@@ -3,6 +3,7 @@ import { useState } from 'react';
 import {teamData} from "../../helpers/teamdata";
 import {ISignUpData, signUp} from "../../helpers/auth"
 import {Link} from "react-router-dom";
+import AppLogo from "../../images/applogo.svg";
 
 export interface SignUpProps {
     
@@ -31,20 +32,23 @@ const SignUp: React.FC<SignUpProps> = () => {
     }
 
     return ( 
-        <>
+        <div className="login-container">
+            <div className="logo">
+                <img src={AppLogo} alt="applogo"/>
+            </div>
             <form action="">
                 <input type="text" name="name" placeholder="Name" onChange={e => setName(e.target.value)} required/>
                 <input type="text" name="email" placeholder="Email" onChange={e => setEmail(e.target.value)} required/>
-                <input type="password" name="password" placeholder="password" onChange={e => setPassword(e.target.value)} required/>
+                <input type="password" name="password" placeholder="Password" onChange={e => setPassword(e.target.value)} required/>
                 <select name="teamIDSelect" onChange={e => setTeamID(parseInt(e.target.value))} required>
                     {Object.entries(teamData).map(([key, value]) => {
                         return <option value={key} key={key}>{value.name}</option>
                     })}
                 </select>
                 <button onClick={e => handleSubmit(e)}>Sign Up</button>
+                <div>Already have an account? <Link to="/login">Login</Link></div>
             </form>
-            <div>Already have an account?<Link to="/login">Login</Link></div>
-        </>
+        </div>
      );
 }
  
