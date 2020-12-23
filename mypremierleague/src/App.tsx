@@ -41,13 +41,13 @@ const App = () => {
             <NavBar setToken={setToken}/>
             <Switch>
               <Route path="/home">
-                <Home />
+                <Home teamID={token.teamID} />
               </Route>
               <Route path="/fixtures">
                 <Fixtures/>
               </Route>
-              <Route path="/stats">
-                <Stats />
+              <Route path="/stats" >
+                <Stats teamID={token.teamID} />
               </Route>
             </Switch>
         </Router>

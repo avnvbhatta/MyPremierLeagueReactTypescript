@@ -1,4 +1,4 @@
-import  React, {useEffect} from 'react';
+import  React, {useEffect, useState} from 'react';
 import {getCurrentGameWeek, getUpcomingEPLFixtures} from "../../helpers/api";
 
 
@@ -7,22 +7,33 @@ export interface FixturesProps {
 }
  
 const Fixtures: React.FC<FixturesProps> = () => {
+
+    const [currentGameWeek, setCurrentGameWeek] = useState<Number>();
+    const [isLoading, setIsLoading] = useState<Boolean>(true);
     useEffect(()=>{
        
         const getCurrentGameWeekAsync = async () => {
-            let res = await getCurrentGameWeek();
-            console.log(res);
+            try {
+                let res = await getCurrentGameWeek();
+                console.log(res);
+            } catch (error) {
+                console.log(error);
+            }
+            
         }
 
         const getUpcomingEPLFixturesAsync = async () => {
-            let res = await getUpcomingEPLFixtures();
-            console.log(res);
+            try {
+                let res = await getUpcomingEPLFixtures();
+                console.log(res);
+            } catch (error) {
+                console.log(error)
+            }
         }
 
-         
-
-        // getCurrentGameWeekAsync();
-        // getUpcomingEPLFixturesAsync();
+        getCurrentGameWeekAsync();
+        getUpcomingEPLFixturesAsync();
+        setIsLoading(false);
 
     }, [])
     return ( 

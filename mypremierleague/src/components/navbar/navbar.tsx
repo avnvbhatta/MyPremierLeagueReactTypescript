@@ -8,7 +8,6 @@ export interface NavBarProps extends RouteComponentProps {
 }
  
 const NavBar: React.FC<NavBarProps> = (props) => {
-    
     //handle sign out
     const handleSignOut = () => {
         props.setToken(null);

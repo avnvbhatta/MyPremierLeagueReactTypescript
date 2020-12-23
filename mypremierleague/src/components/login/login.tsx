@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { useState } from 'react';
 import {ILoginData, logIn} from "../../helpers/auth";
-import {Link} from "react-router-dom";
+import {Link, RouteComponentProps, withRouter} from "react-router-dom";
 import {IUserToken} from '../../helpers/useToken';
 
-export interface LoginProps {
+export interface LoginProps extends RouteComponentProps{
     setToken: (userToken: IUserToken) => void; 
 }
  
@@ -19,15 +19,19 @@ const Login: React.FC<LoginProps> = (props) => {
             password: password
         }
         
-        let response = await logIn(loginData);
-        let {name, teamID, _id } = response.data.data;
-        let token: IUserToken = {
-            id: _id,
-            name: name,
-            teamID: teamID
+        try {
+            let response = await logIn(loginData);
+            let {name, teamID, _id } = response?.data.data;
+            let token: IUserToken = {
+                id: _id,
+                name: name,
+                teamID: teamID
+            }
+            props.setToken(token);
+            props.history.push('/home');
+        } catch (error) {
+            console.log(error);
         }
-        props.setToken(token);
-
     }
     return ( 
         <>
@@ -43,4 +47,4 @@ const Login: React.FC<LoginProps> = (props) => {
      );
 }
  
-export default Login;
+export default withRouter(Login);

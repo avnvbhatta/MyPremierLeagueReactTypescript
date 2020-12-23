@@ -22,9 +22,12 @@ const SignUp: React.FC<SignUpProps> = () => {
             password: password,
             teamID: teamID
         }
-        let response = await signUp(signUpData);
-        console.log(response);
-
+        try {
+            let response = await signUp(signUpData);
+            console.log(response);
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     return ( 
