@@ -30,6 +30,7 @@ html, body{
 }
 
 .block{
+    padding: 1em;
     .title{
         background-color: #38003D;
         color: white;
@@ -37,16 +38,72 @@ html, body{
         display: flex;
         align-items: center;
         border-radius: 20px 20px 0 0;
-        padding: 0 1em
+        padding: 0 1em;
+        justify-content: space-between;
     }
     
     
     .content{
         background-color: rgb(232, 232, 235);
-        height: 10vh;
         border-radius: 0 0 20px 20px;
     }
     
 }
 
+
+.fixtureRow{
+    display: flex;
+    flex-direction: row;
+    background-color: white;
+    border-radius: 10px;
+    margin: 0 1em 1em 1em;
+    padding: 1em;
+    justify-content: space-between;
+    .teams{
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        width: 65%;
+        
+        .homeTeam, .awayTeam{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin: 0.25em 0;
+            justify-content: space-between;
+            width: 100%;
+
+            .info{
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+            }
+            .score{
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+                font-weight: bold;
+            }
+        }
+    
+        .teamLogo{
+            width: 30px;
+            height: 30px;
+            margin-right: 1em;
+        }
+    }
+    
+    .event{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+
+        .score{
+            font-size: 2em;
+        }
+    }
+}
 

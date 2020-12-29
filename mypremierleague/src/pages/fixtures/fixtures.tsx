@@ -1,5 +1,6 @@
 import  React, {useEffect, useState} from 'react';
 import {getCurrentGameWeek, getUpcomingEPLFixtures} from "../../helpers/api";
+import moment from "moment";
 
 
 export interface FixturesProps {
@@ -21,22 +22,24 @@ interface IFixtureRow{
     awayTeamName: string,
     awayTeamLogo: string,
     awayTeamGoals: number
-    venue: string,
     eventDate: string,
 }
  
 const Fixtures: React.FC<FixturesProps> = () => {
 
-    const [currentGameWeek, setCurrentGameWeek] = useState<Number>();
-    const [isLoading, setIsLoading] = useState<Boolean>(true);
+    const [currentGameWeek, setCurrentGameWeek] = useState<number>(0);
+    const [selectedGameWeek, setSelectedGameWeek] = useState<number>(0);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
     const [fixtures, setFixtures] = useState<IFixtures>();
 
     useEffect(()=>{
        
         const getCurrentGameWeekAsync = async () => {
             try {
-                let res = await getCurrentGameWeek();
-                console.log(res);
+                // let res = await getCurrentGameWeek();
+                // console.log(res);
+                setCurrentGameWeek(15);
+                setSelectedGameWeek(15);
             } catch (error) {
                 console.log(error);
             }
@@ -50,12 +53,12 @@ const Fixtures: React.FC<FixturesProps> = () => {
                 for(let j =0; j<38; j++){
                     let fixtureRows: IFixtureRow[] = [];
 
-                    for(let i=0+j*10; i<10; i++){
+                    for(let i=0+j*10; i<j*10+10; i++){
 
                         let {
                             homeTeam: {logo: homeTeamLogo, team_name: homeTeamName},
                             awayTeam: {logo: awayTeamLogo, team_name: awayTeamName},
-                            venue, event_date, goalsHomeTeam, goalsAwayTeam
+                            event_date, goalsHomeTeam, goalsAwayTeam
                         } = res[i];
     
                         let fixtureRow: IFixtureRow = {
@@ -65,7 +68,6 @@ const Fixtures: React.FC<FixturesProps> = () => {
                             awayTeamName: awayTeamName,
                             awayTeamLogo: awayTeamLogo,
                             awayTeamGoals: parseInt(goalsAwayTeam),
-                            venue: venue,
                             eventDate: event_date,
                         }
                         fixtureRows.push(fixtureRow);
@@ -81,11 +83,9 @@ const Fixtures: React.FC<FixturesProps> = () => {
                 let finalFixtures: IFixtures = {
                     fixtures: fixtures
                 }
-
-                console.log(finalFixtures.fixtures[0].fixture)
                 setFixtures(finalFixtures);
+                setIsLoading(false);
 
-                console.log(res);
             } catch (error) {
                 console.log(error)
             }
@@ -93,41 +93,87 @@ const Fixtures: React.FC<FixturesProps> = () => {
 
         getCurrentGameWeekAsync();
         getUpcomingEPLFixturesAsync();
-        setIsLoading(false);
 
     }, [])
 
-    // const fixtureRow = () => {
-    //     return <div className="fixtureRow">
-    //                 <div className="homeTeam">
-    //                     <img src="${homeTeamLogo}" alt="" >
-    //                     <p>{homeTeamName}}</p>
-    //                 </div>
-    //                 <div className="fixtureDetails">
-    //                     ${goalsHomeTeam == null ||  goalsAwayTeam == null ? '' : `<div className="scores">${goalsHomeTeam} - ${goalsAwayTeam}</div>`  }
-    //                     <div className="datetime">${moment(event_date).format('ddd, MMM do @ hA')}</div>
-    //                     <div className="venue">${venue}</div>
-    //                 </div>
-    //                 <div className="awayTeam">
-    //                     <p>${awayTeamName}</p>
-    //                     <img src="${awayTeamLogo}" alt="" >
-    //                 </div>
-    //             </div>
-    // }
+    const generateGW  = () => {
+        let gws: any = [];
+        for(let i=0; i<38; i++){
+            gws.push(<option key={i} value={i}>Gameweek {i === currentGameWeek ? `${i+1} (Current)` : i+1}</option>);
+        }
+        return gws;
+    }
+
+    const decreaseGW = () => {
+        setSelectedGameWeek(selectedGameWeek-1);
+    }
+    
+    const increaseGW = () => {
+        setSelectedGameWeek(selectedGameWeek+1);
+        
+    }
+
+    const handleSelectChange = (event) => {
+        setSelectedGameWeek(event.target.value);
+    }
+
+    useEffect(()=> {
+
+    }, [fixtures])
 
     return ( 
-        <div>
-            Fixtures Page
+        <>
             <div className="block">
                 <div className="title">
-                    Upcoming EPL Fixtures
+                    <div>EPL Fixtures</div>
+                    <div className="gameweekSelect">
+                        <button onClick={decreaseGW}>dec</button>
+                        <select name="gwSelect" id="gwSelect" value={selectedGameWeek} onChange={e => handleSelectChange(e)} >
+                            {generateGW()}
+                        </select>
+                        <button onClick={increaseGW}>inc</button>
+                    </div>
                 </div>
+                
                 <div className="content">
-
+                    {isLoading ? <></> :  
+                        <>
+                            {fixtures?.fixtures[selectedGameWeek].fixture.map(fixtureRow=> {
+                                console.log(fixtureRow);
+                                return <div className="fixtureRow">
+                                        <div className="teams">
+                                            <div className="homeTeam">
+                                                <div className="info">
+                                                    <img className="teamLogo" src={fixtureRow.homeTeamLogo} alt="homeTeamLogo"/>
+                                                    <div>{fixtureRow.homeTeamName}</div>
+                                                </div>
+                                                <div className="score">
+                                                    {isNaN(fixtureRow.homeTeamGoals) ? '' : fixtureRow.homeTeamGoals}
+                                                </div>
+                                            </div>
+                                            
+                                            <div className="awayTeam">
+                                                <div className="info">
+                                                    <img className="teamLogo" src={fixtureRow.awayTeamLogo} alt="awayTeamLogo"/>
+                                                    <div>{fixtureRow.awayTeamName}</div>
+                                                </div>
+                                                <div className="score">
+                                                    {isNaN(fixtureRow.awayTeamGoals) ? '': fixtureRow.awayTeamGoals}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="event">
+                                            <div className="date">{moment(fixtureRow.eventDate).format('ddd, hA')}</div>
+                                            <div className="date">{moment(fixtureRow.eventDate).format('MM/DD')}</div>
+                                        </div>
+                                        
+                                    </div>
+                            })}
+                        </>
+                    }
                 </div>
             </div>
-            
-        </div>
+        </>
      );
 }
  
