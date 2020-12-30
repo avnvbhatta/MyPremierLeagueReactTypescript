@@ -1,7 +1,7 @@
 import  React, {useEffect, useState} from 'react';
 import {getCurrentGameWeek, getUpcomingEPLFixtures} from "../../helpers/api";
 import moment from "moment";
-
+import "./fixtures.scss"
 
 export interface FixturesProps {
     
@@ -127,20 +127,27 @@ const Fixtures: React.FC<FixturesProps> = () => {
                 <div className="title">
                     <div>EPL Fixtures</div>
                     <div className="gameweekSelect">
-                        <button onClick={decreaseGW}>dec</button>
+                        <div className="chev" onClick={decreaseGW}>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                            </svg>
+                        </div>
                         <select name="gwSelect" id="gwSelect" value={selectedGameWeek} onChange={e => handleSelectChange(e)} >
                             {generateGW()}
                         </select>
-                        <button onClick={increaseGW}>inc</button>
+                        <div className="chev" onClick={increaseGW}>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                            </svg>
+                        </div>
                     </div>
                 </div>
                 
                 <div className="content">
                     {isLoading ? <></> :  
                         <>
-                            {fixtures?.fixtures[selectedGameWeek].fixture.map(fixtureRow=> {
-                                console.log(fixtureRow);
-                                return <div className="fixtureRow">
+                            {fixtures?.fixtures[selectedGameWeek].fixture.map((fixtureRow, idx)=> {
+                                return <div key={idx} className="fixtureRow">
                                         <div className="teams">
                                             <div className="homeTeam">
                                                 <div className="info">
@@ -151,7 +158,12 @@ const Fixtures: React.FC<FixturesProps> = () => {
                                                     {isNaN(fixtureRow.homeTeamGoals) ? '' : fixtureRow.homeTeamGoals}
                                                 </div>
                                             </div>
-                                            
+                                            <div className="event-full">
+                                                <div className="score">
+                                                    {isNaN(fixtureRow.homeTeamGoals) || isNaN(fixtureRow.awayTeamGoals) ? '-': `${fixtureRow.homeTeamGoals} - ${fixtureRow.awayTeamGoals}`}
+                                                </div>
+                                                <div className="date">{moment(fixtureRow.eventDate).format('ddd, @ hA MM/DD')}</div>
+                                            </div>
                                             <div className="awayTeam">
                                                 <div className="info">
                                                     <img className="teamLogo" src={fixtureRow.awayTeamLogo} alt="awayTeamLogo"/>
