@@ -2,6 +2,7 @@ import  React, {useEffect, useState} from 'react';
 import {getCurrentGameWeek, getUpcomingEPLFixtures} from "../../helpers/api";
 import moment from "moment";
 import "./fixtures.scss"
+import Loading from '../../components/loading/loading';
 
 export interface FixturesProps {
     
@@ -24,7 +25,18 @@ interface IFixtureRow{
     awayTeamGoals: number
     eventDate: string,
 }
+
+const ChevronLeft = () => 
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+    </svg>
  
+const ChevronRight = () =>
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+    </svg>
+
+
 const Fixtures: React.FC<FixturesProps> = () => {
 
     const [currentGameWeek, setCurrentGameWeek] = useState<number>(0);
@@ -122,70 +134,64 @@ const Fixtures: React.FC<FixturesProps> = () => {
     }, [fixtures])
 
     return ( 
-        <>
-            <div className="block">
-                <div className="title">
-                    <div>EPL Fixtures</div>
-                    <div className="gameweekSelect">
-                        <div className="chev" onClick={decreaseGW}>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                            </svg>
-                        </div>
-                        <select name="gwSelect" id="gwSelect" value={selectedGameWeek} onChange={e => handleSelectChange(e)} >
-                            {generateGW()}
-                        </select>
-                        <div className="chev" onClick={increaseGW}>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                            </svg>
-                        </div>
+        <div className="block">
+            <div className="title">
+                <div>EPL Fixtures</div>
+                <div className="gameweekSelect">
+                    <div className="chev" onClick={decreaseGW}>
+                        <ChevronLeft />
+                    </div>
+                    <select name="gwSelect" id="gwSelect" value={selectedGameWeek} onChange={e => handleSelectChange(e)} >
+                        {generateGW()}
+                    </select>
+                    <div className="chev" onClick={increaseGW}>
+                        <ChevronRight />
                     </div>
                 </div>
-                
-                <div className="content">
-                    {isLoading ? <></> :  
-                        <>
-                            {fixtures?.fixtures[selectedGameWeek].fixture.map((fixtureRow, idx)=> {
-                                return <div key={idx} className="fixtureRow">
-                                        <div className="teams">
-                                            <div className="homeTeam">
-                                                <div className="info">
-                                                    <img className="teamLogo" src={fixtureRow.homeTeamLogo} alt="homeTeamLogo"/>
-                                                    <div>{fixtureRow.homeTeamName}</div>
-                                                </div>
-                                                <div className="score">
-                                                    {isNaN(fixtureRow.homeTeamGoals) ? '' : fixtureRow.homeTeamGoals}
-                                                </div>
-                                            </div>
-                                            <div className="event-full">
-                                                <div className="score">
-                                                    {isNaN(fixtureRow.homeTeamGoals) || isNaN(fixtureRow.awayTeamGoals) ? '-': `${fixtureRow.homeTeamGoals} - ${fixtureRow.awayTeamGoals}`}
-                                                </div>
-                                                <div className="date">{moment(fixtureRow.eventDate).format('ddd, @ hA MM/DD')}</div>
-                                            </div>
-                                            <div className="awayTeam">
-                                                <div className="info">
-                                                    <img className="teamLogo" src={fixtureRow.awayTeamLogo} alt="awayTeamLogo"/>
-                                                    <div>{fixtureRow.awayTeamName}</div>
-                                                </div>
-                                                <div className="score">
-                                                    {isNaN(fixtureRow.awayTeamGoals) ? '': fixtureRow.awayTeamGoals}
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="event">
-                                            <div className="date">{moment(fixtureRow.eventDate).format('ddd, hA')}</div>
-                                            <div className="date">{moment(fixtureRow.eventDate).format('MM/DD')}</div>
-                                        </div>
-                                        
-                                    </div>
-                            })}
-                        </>
-                    }
-                </div>
             </div>
-        </>
+            
+            <div className="content">
+                {isLoading ? <Loading /> :  
+                    <>
+                        {fixtures?.fixtures[selectedGameWeek].fixture.map((fixtureRow, idx)=> {
+                            return <div key={idx} className="fixtureRow">
+                                    <div className="teams">
+                                        <div className="homeTeam">
+                                            <div className="info">
+                                                <img className="teamLogo" src={fixtureRow.homeTeamLogo} alt="homeTeamLogo"/>
+                                                <div>{fixtureRow.homeTeamName}</div>
+                                            </div>
+                                            <div className="score">
+                                                {isNaN(fixtureRow.homeTeamGoals) ? '' : fixtureRow.homeTeamGoals}
+                                            </div>
+                                        </div>
+                                        <div className="event-full">
+                                            <div className="score">
+                                                {isNaN(fixtureRow.homeTeamGoals) || isNaN(fixtureRow.awayTeamGoals) ? '-': `${fixtureRow.homeTeamGoals} - ${fixtureRow.awayTeamGoals}`}
+                                            </div>
+                                            <div className="date">{moment(fixtureRow.eventDate).format('ddd, MM/DD @ hA')}</div>
+                                        </div>
+                                        <div className="awayTeam">
+                                            <div className="info">
+                                                <img className="teamLogo" src={fixtureRow.awayTeamLogo} alt="awayTeamLogo"/>
+                                                <div>{fixtureRow.awayTeamName}</div>
+                                            </div>
+                                            <div className="score">
+                                                {isNaN(fixtureRow.awayTeamGoals) ? '': fixtureRow.awayTeamGoals}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="event">
+                                        <div className="date">{moment(fixtureRow.eventDate).format('ddd, hA')}</div>
+                                        <div className="date">{moment(fixtureRow.eventDate).format('MM/DD')}</div>
+                                    </div>
+                                    
+                                </div>
+                        })}
+                    </>
+                }
+            </div>
+        </div>
      );
 }
  

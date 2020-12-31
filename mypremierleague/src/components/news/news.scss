@@ -1,0 +1,29 @@
+.newsRow{
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    margin: 1em 0;
+    padding: 1em;
+    border-radius: 10px;
+    align-items: center;
+
+    &:nth-child(12){
+            margin-bottom: 0.5em;
+    }
+
+    img{
+        width: 75px;
+        height: 75px;
+        padding: 1em;
+    }
+
+    .newsInfo{
+        display: flex;
+        flex-direction: column;
+       
+        .newsCreated{
+            font-size: 0.8em;
+            margin-top: 0.5em;
+        }
+    }
+}

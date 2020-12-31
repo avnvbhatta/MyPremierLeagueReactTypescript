@@ -1,7 +1,10 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import {getTeamNews} from "../../helpers/api";
-import placeHolderImage from "../../images/placeholder.png"
+import placeHolderImage from "../../images/placeholder.png";
+import Loading from "../loading/loading";
+import moment from "moment";
+import "./news.scss"
 export interface NewsProps {
     teamID: number
 }
@@ -23,13 +26,8 @@ const News: React.FC<NewsProps> = ({teamID}) => {
                 let response = await getTeamNews(teamID);
                 let tempNewsArray: News[] = [];
                 response.forEach(news => {
-                    
                     let redditURL = `http://www.reddit.com${news.data.permalink}`;
-                    // let thumbnail = news.data.thumbnail === 'self' ? placeHolderImage : news.data.thumbnail;
-                    let thumbnail = news.data.thumbnail;
-                    let title = news.data.title;
-                    let created = news.data.created;
-
+                    let {thumbnail, title, created} = news.data;
                     let tempNews: News = {
                         title: title,
                         thumbnail: thumbnail,
@@ -47,8 +45,30 @@ const News: React.FC<NewsProps> = ({teamID}) => {
         getTeamNewsAsync();
     }, [])
     return ( 
-        <div></div>
-     );
+
+        <div className="block">
+            <div className="title">News</div>
+            <div className="content">
+                {isLoading ? <Loading /> : 
+                <>
+                    {news?.map((item,idx) => {
+                        return <div className="newsRow" key={idx}>
+                                <img src={item.thumbnail === 'self' ? placeHolderImage : item.thumbnail} alt={item.title}/>
+                                <div className="newsInfo">
+                                    <div className="newsTitle"><a href={item.redditURL}>{item.title}</a></div>
+                                    <div className="newsCreated">Submitted {moment.unix(parseInt(item.created)).fromNow()}</div>
+                                </div>
+                            </div>
+                    })}
+
+                </>
+
+                }
+                
+            </div>
+        </div>
+            
+        );
 }
  
 export default News;

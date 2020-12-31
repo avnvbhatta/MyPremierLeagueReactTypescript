@@ -12,12 +12,11 @@ export interface HomeProps {
  
 const Home: React.FC<HomeProps> = ({teamID}) => {
     return ( 
-        <div>
-            Home Page
+        <>
             {/* <UpcomingFixtures teamID={token.teamID} /> */}
             {/* <LeagueTable /> */}
-            {/* <News teamID={token.teamID}/> */}
-        </div>
+            <News teamID={teamID}/>
+        </>
      );
 }
  

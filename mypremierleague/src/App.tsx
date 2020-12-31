@@ -36,9 +36,10 @@ const App = () => {
     );
   }
 
+  
   return (
         <Router>
-            <NavBar setToken={setToken}/>
+            <NavBar setToken={setToken} teamID={token.teamID}/>
             <Switch>
               <Route path="/home">
                 <Home teamID={token.teamID} />
