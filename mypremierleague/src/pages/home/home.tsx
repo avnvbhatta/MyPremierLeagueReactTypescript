@@ -13,7 +13,7 @@ export interface HomeProps {
 const Home: React.FC<HomeProps> = ({teamID}) => {
     return ( 
         <>
-            {/* <UpcomingFixtures teamID={token.teamID} /> */}
+            <UpcomingFixtures teamID={teamID} />
             {/* <LeagueTable /> */}
             <News teamID={teamID}/>
         </>
