@@ -2,16 +2,22 @@ import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { getLeagueTable } from "../../helpers/api";
 import { teamData } from '../../helpers/teamdata';
+import Loading from '../loading/loading';
+import LeagueTableRow from './leageTableRow';
+import "./leagueTable.scss";
 
 export interface LeagueTableProps {
     
 }
 
 interface ILeagueTable {
+    table: ILeagueTableRow[]
+}
+
+interface ILeagueTableRow {
     rank: number,
     logo: string,
     teamName: string,
-    form: string, 
     played: number,
     goalDiff: number, 
     points: number,
@@ -19,7 +25,7 @@ interface ILeagueTable {
 
 const LeagueTable: React.FC<LeagueTableProps> = () => {
 
-    const [leagueTable, setLeagueTable] = useState<ILeagueTable[]>();
+    const [leagueTable, setLeagueTable] = useState<ILeagueTable>();
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
     
@@ -27,21 +33,23 @@ const LeagueTable: React.FC<LeagueTableProps> = () => {
         const getLeagueTableAsync = async () => {
             try{
                 let response: any = await getLeagueTable();
-                let tempLeagueTable: ILeagueTable[] = [];
+                let tempLeagueTableRows: ILeagueTableRow[] = [];
                 
                 response.map(tableRow => {
-                    let {rank, logo, teamName, forme, all: {matchsPlayed}, goalsDiff, points} = tableRow;
-                    let tempRow: ILeagueTable = {
+                    let {rank, logo, teamName, all: {matchsPlayed}, goalsDiff, points} = tableRow;
+                    let tempRow: ILeagueTableRow = {
                         rank: rank,
                         logo: logo,
                         teamName: teamName,
-                        form: forme,
                         played: matchsPlayed,
                         goalDiff: goalsDiff,
                         points: points
                     }
-                    tempLeagueTable.push(tempRow);
+                    tempLeagueTableRows.push(tempRow);
                 });
+                let tempLeagueTable: ILeagueTable = {
+                    table: tempLeagueTableRows
+                }
                 setLeagueTable(tempLeagueTable);
                 setIsLoading(false);
             }
@@ -53,7 +61,29 @@ const LeagueTable: React.FC<LeagueTableProps> = () => {
 
     }, [])
     return ( 
-        <div></div>
+        <div className="block leagueTable">
+            <div className="title">EPL Table</div>
+            <div className="content">
+                {isLoading ? <Loading /> : 
+                    <table>
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th>P</th>
+                                <th>GD</th>
+                                <th>PTS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {leagueTable?.table.map((leagueTableRow, idx) => {
+                                return <LeagueTableRow key={idx} leagueTableRow={leagueTableRow}/>
+                            })}
+                        </tbody>
+                    </table>
+                }
+            </div>
+        </div>
      );
 }
  

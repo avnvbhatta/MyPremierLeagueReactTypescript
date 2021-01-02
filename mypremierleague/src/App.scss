@@ -29,10 +29,21 @@ html, body{
     }
 }
 
+.error{
+    color: red;
+    text-align: center;
+}
+
+.success{
+    color: green;
+    text-align: center;
+}
+
 .block{
     padding: 0 1em;
     margin: 1em 0;
     max-width: 650px;
+    margin: auto;
     .title{
         background-color: #38003D;
         color: white;

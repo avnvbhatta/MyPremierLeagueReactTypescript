@@ -23,6 +23,7 @@ const NavBar: React.FC<NavBarProps> = ({setToken, teamID, history}) => {
     const handleSignOut = () => {
         setToken(null);
         sessionStorage.removeItem('token');
+        document.getElementsByTagName('body')[0].style.backgroundColor = teamData[teamID].colors;
         history.push('/login');
     }
 
@@ -41,9 +42,6 @@ const NavBar: React.FC<NavBarProps> = ({setToken, teamID, history}) => {
     }
 
     const teamLogo = teamData[teamID].logo;
-    const setBodyBackground = () => {
-        document.getElementsByTagName('body')[0].style.backgroundColor = teamData[teamID].colors;
-    }
 
     useEffect(() => {
         document.getElementsByTagName('body')[0].style.backgroundColor = teamData[teamID].colors;
