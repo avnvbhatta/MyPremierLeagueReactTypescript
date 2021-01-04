@@ -34,7 +34,6 @@ const UpcomingFixtures: React.FC<UpcomingFixturesProps> = ({teamID}) => {
         const getUpcomingFixturesAsync = async () => {
             try {
                 let res = await getUpcomingFixtures(teamID, 5);
-                 console.log(res);
                  let fixtureRows: IFixtureRow[] = [];
 
                 res.map(fixture => {

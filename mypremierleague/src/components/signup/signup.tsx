@@ -59,9 +59,9 @@ const SignUp: React.FC<SignUpProps> = () => {
                 <img src={AppLogo} alt="applogo"/>
             </div>
             <form action="">
-                <input type="text" name="name" placeholder="Name" onChange={e => setName(e.target.value)} required/>
-                <input type="text" name="email" placeholder="Email" onChange={e => setEmail(e.target.value)} required/>
-                <input type="password" name="password" placeholder="Password" onChange={e => setPassword(e.target.value)} required/>
+                <input type="text" name="name" placeholder="name" onChange={e => setName(e.target.value)} required/>
+                <input type="text" name="email" placeholder="email" onChange={e => setEmail(e.target.value)} required/>
+                <input type="password" name="password" placeholder="password" onChange={e => setPassword(e.target.value)} required/>
                 <select name="teamIDSelect" onChange={e => setTeamID(parseInt(e.target.value))} required>
                     {Object.entries(teamData).map(([key, value]) => {
                         return <option value={key} key={key}>{value.name}</option>

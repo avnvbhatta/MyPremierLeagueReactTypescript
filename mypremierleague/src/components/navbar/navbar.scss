@@ -4,7 +4,10 @@
     justify-content: space-between;
     align-items: center;
     padding: 0 1em;
-    
+    background-color: #38003D;
+    color: white;
+    margin-bottom: 1em;
+
     .navbar{
         display: none;
     }
@@ -29,17 +32,34 @@
     align-items: flex-end;
     padding: 1em;
 
+    
+
     a{
         text-decoration: none;
+        color: white;
+        position: relative;
+        transition: all 1s ease-in-out;
+
+        
+       
+        
+        
     }
 
-    *{
-        padding-left: 1em;
+    a, div{
+        padding: 0 1em;
+        .underline{
+            border-bottom: 1px solid white;
+            width: 10px;
+            position: absolute;
+            top: 30px;
+        }
     }
 
     div{
         cursor: pointer;
     }
+
 }
 
 @media only screen and (min-width: 600px) {
@@ -50,6 +70,6 @@
         flex-direction: row;
     }
     .menuButton{
-        display: none;
+        display: none !important;
     }
   }

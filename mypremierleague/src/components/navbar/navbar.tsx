@@ -11,11 +11,10 @@ export interface NavBarProps extends RouteComponentProps {
     setToken: (userToken: IUserToken | null) => void; 
 }
  
-const NavBar: React.FC<NavBarProps> = ({setToken, teamID, history}) => {
+const NavBar: React.FC<NavBarProps> = ({setToken, teamID, history, location}) => {
 
     const [showMenu, setShowMenu] = useState<Boolean>(true);
     const toggleDrawer = () =>{
-        console.log(showMenu)
         setShowMenu(!showMenu);
     }
 
@@ -28,15 +27,14 @@ const NavBar: React.FC<NavBarProps> = ({setToken, teamID, history}) => {
     }
 
     const handleNavClick = () =>{
-        setShowMenu(!showMenu);
-
+        setShowMenu(true); 
     }
 
     const Navs = () => {
         return <div className="navs">
-                    <Link to="/home" onClick={() => handleNavClick()}>Home</Link>
-                    <Link to="/fixtures" onClick={() => handleNavClick()}>Fixtures</Link>
-                    <Link to="/stats" onClick={() => handleNavClick()}>Stats</Link>
+                    <Link to="/home" onClick={() => handleNavClick()}>Home{location.pathname === '/home' && <div className="underline"></div>}</Link>
+                    <Link to="/fixtures" onClick={() => handleNavClick()}>Fixtures{location.pathname === '/fixtures' && <div className="underline"></div>}</Link>
+                    <Link to="/stats" onClick={() => handleNavClick()}>Stats{location.pathname === '/stats' && <div className="underline"></div>}</Link>
                     <div onClick={handleSignOut}>Sign Out</div>
                 </div>
     }
@@ -45,8 +43,11 @@ const NavBar: React.FC<NavBarProps> = ({setToken, teamID, history}) => {
 
     useEffect(() => {
         document.getElementsByTagName('body')[0].style.backgroundColor = teamData[teamID].colors;
-
     }, [])
+
+    useEffect(() => {
+
+    }, [location.pathname])
     return ( 
         <>
             <div className="container">

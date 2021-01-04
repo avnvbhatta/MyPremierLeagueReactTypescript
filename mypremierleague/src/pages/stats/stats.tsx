@@ -11,7 +11,7 @@ const Stats: React.FC<StatsProps> = ({teamID}) => {
         const getTeamStatsAsync = async () => {
             try {
                 let response: any = await getTeamStats(teamID);
-                console.log(response);
+                // console.log(response);
             } catch (error) {
                 console.log(error);
             }
@@ -20,7 +20,7 @@ const Stats: React.FC<StatsProps> = ({teamID}) => {
         const getLeagueTopScorersAsync = async () => {
             try {
                 let response: any = await getLeagueTopScorers();
-                console.log(response);
+                // console.log(response);
             } catch (error) {
                 console.log(error);
             }
