@@ -18,7 +18,7 @@
             height: 50px;
         }
     }
-    .menuButton{
+    .menuButton, .closeButton{
         width: 40px;
         height: 40px;
         filter: invert(100);
@@ -30,6 +30,16 @@
     background-color: #38003D;
     position: absolute;
     width: 100%;
+    overflow: hidden;
+
+    &.show{
+        height: 250px;
+        transition: height 0.4s ease-in-out;
+    }
+    &.hide{
+        height: 0;
+        transition: height 0.2s ease-in-out;
+    }
 }
 
 .navs{
@@ -68,6 +78,16 @@
     }
     .navs{
         flex-direction: row;
+        a{
+            display: flex;
+            justify-content: center;
+        }
+        a, div{
+            padding: 1em;
+            .underline{
+                width: 10px;
+            }
+        }
     }
     .menuButton{
         display: none !important;

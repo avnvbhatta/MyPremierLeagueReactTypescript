@@ -3,6 +3,8 @@ import {Link, RouteComponentProps, withRouter } from "react-router-dom";
 import {IUserToken} from '../../helpers/useToken';
 import "./navbar.scss"
 import MenuButton from "../../images/menu.png";
+import CloseButton from "../../images/close.png";
+
 import { useEffect, useState } from 'react';
 import { teamData } from '../../helpers/teamdata';
 
@@ -27,7 +29,7 @@ const NavBar: React.FC<NavBarProps> = ({setToken, teamID, history, location}) =>
     }
 
     const handleNavClick = () =>{
-        setShowMenu(true); 
+        setShowMenu(false); 
     }
 
     const Navs = () => {
@@ -57,10 +59,11 @@ const NavBar: React.FC<NavBarProps> = ({setToken, teamID, history, location}) =>
                 <div className="navbar">
                     <Navs />
                 </div>
-                <img className="menuButton" src={MenuButton} alt="menuButton" onClick={toggleDrawer}/>
+                <img className={showMenu ? 'closeButton' : 'menuButton'} src={showMenu ? CloseButton : MenuButton} alt="menuButton" onClick={toggleDrawer}/>
+
             </div>
-            <div className="drawer">
-                {!showMenu && <Navs />}
+            <div className={`drawer ${showMenu ? 'show' : 'hide'}`}>
+                <Navs />
             </div>
 
         </>
