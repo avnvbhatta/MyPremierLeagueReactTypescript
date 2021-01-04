@@ -6,7 +6,6 @@
     padding: 0 1em;
     background-color: #38003D;
     color: white;
-    margin-bottom: 1em;
 
     .navbar{
         display: none;
@@ -24,6 +23,13 @@
         height: 40px;
         filter: invert(100);
     }
+    
+}
+
+.drawer{
+    background-color: #38003D;
+    position: absolute;
+    width: 100%;
 }
 
 .navs{
@@ -32,27 +38,21 @@
     align-items: flex-end;
     padding: 1em;
 
-    
 
     a{
         text-decoration: none;
-        color: white;
         position: relative;
         transition: all 1s ease-in-out;
-
-        
-       
-        
-        
     }
 
     a, div{
-        padding: 0 1em;
+        padding: 1em 0;
+        color: white;
         .underline{
             border-bottom: 1px solid white;
-            width: 10px;
             position: absolute;
-            top: 30px;
+            top: 10px;
+            width: 100%;
         }
     }
 
@@ -71,5 +71,10 @@
     }
     .menuButton{
         display: none !important;
+    }
+    .drawer{
+        .navs{
+            display: none;
+        }
     }
   }

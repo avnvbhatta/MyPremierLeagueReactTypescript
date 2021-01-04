@@ -59,7 +59,9 @@ const NavBar: React.FC<NavBarProps> = ({setToken, teamID, history, location}) =>
                 </div>
                 <img className="menuButton" src={MenuButton} alt="menuButton" onClick={toggleDrawer}/>
             </div>
-            {!showMenu && <Navs />}
+            <div className="drawer">
+                {!showMenu && <Navs />}
+            </div>
 
         </>
         
