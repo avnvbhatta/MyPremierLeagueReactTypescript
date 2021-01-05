@@ -39,7 +39,6 @@ const SignUp: React.FC<SignUpProps> = () => {
         }
         try {
             let response = await signUp(signUpData);
-            console.log(response);
             setSuccess(true);
 
         } catch (error) {

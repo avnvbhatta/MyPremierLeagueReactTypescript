@@ -1,40 +1,25 @@
-import  React, {useEffect} from 'react';
-import {getTeamStats, getLeagueTopScorers} from "../../helpers/api";
+import  React, {useEffect, useState} from 'react';
+import TeamStats from '../../components/teamstats/teamStats';
+import TopScorers from '../../components/topscorers/topScorers';
+import "./stats.scss";
 
 export interface StatsProps  {
     teamID: number;
 }
- 
+
+
+
 const Stats: React.FC<StatsProps> = ({teamID}) => {
+   
 
-    useEffect(()=>{
-        const getTeamStatsAsync = async () => {
-            try {
-                let response: any = await getTeamStats(teamID);
-                // console.log(response);
-            } catch (error) {
-                console.log(error);
-            }
-        }
-
-        const getLeagueTopScorersAsync = async () => {
-            try {
-                let response: any = await getLeagueTopScorers();
-                // console.log(response);
-            } catch (error) {
-                console.log(error);
-            }
-            
-        }
-
-        getLeagueTopScorersAsync();
-        getTeamStatsAsync();
-
-    }, [])
-    
     return (  
-        <div>
-            Stats Page
+        <div className="statsContainer">
+            <div className="topScorersContainer">
+                <TopScorers />
+            </div>
+            <div className="teamStatsContainer" >
+                <TeamStats teamID={teamID}/>
+            </div>
         </div>
     );
 }

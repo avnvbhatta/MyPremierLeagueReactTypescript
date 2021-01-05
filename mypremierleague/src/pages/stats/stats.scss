@@ -1,0 +1,15 @@
+.statsContainer{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    .topScorersContainer{
+        width: 100%;
+        max-width: 400px;
+    }
+    .teamStatsContainer{
+        width: 100%;
+        max-width: 600px;
+    }
+    
+}

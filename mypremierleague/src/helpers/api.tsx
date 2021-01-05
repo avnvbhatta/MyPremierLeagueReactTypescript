@@ -63,7 +63,7 @@ export const getUpcomingEPLFixtures = async () => {
 export const getLeagueTopScorers = async () => {
     try {
         let response = await axiosForAPIFootball.get(`/topscorers/2790`)
-        return response.data.api.topscorers;
+        return response.data.api.topscorers.slice(0,10);
     } catch (error) {
         console.log(error);
     }

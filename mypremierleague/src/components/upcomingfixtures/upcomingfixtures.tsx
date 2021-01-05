@@ -7,10 +7,6 @@ export interface UpcomingFixturesProps {
     teamID: number
 }
 
-interface IFixtures{
-    fixtures: IFixture[]
-}
-
 interface IFixture{
     fixture: IFixtureRow[]
 }

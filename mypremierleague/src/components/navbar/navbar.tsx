@@ -15,7 +15,7 @@ export interface NavBarProps extends RouteComponentProps {
  
 const NavBar: React.FC<NavBarProps> = ({setToken, teamID, history, location}) => {
 
-    const [showMenu, setShowMenu] = useState<Boolean>(true);
+    const [showMenu, setShowMenu] = useState<Boolean>(false);
     const toggleDrawer = () =>{
         setShowMenu(!showMenu);
     }
@@ -45,7 +45,7 @@ const NavBar: React.FC<NavBarProps> = ({setToken, teamID, history, location}) =>
 
     useEffect(() => {
         document.getElementsByTagName('body')[0].style.backgroundColor = teamData[teamID].colors;
-    }, [])
+    }, [teamID])
 
     useEffect(() => {
 

@@ -1,6 +1,5 @@
 import  React, {useEffect, useState} from 'react';
 import {getCurrentGameWeek, getUpcomingEPLFixtures} from "../../helpers/api";
-import moment from "moment";
 import "./fixtures.scss"
 import Loading from '../../components/loading/loading';
 import FixtureRow from '../../components/FixtureRow/fixtureRow';
@@ -49,10 +48,9 @@ const Fixtures: React.FC<FixturesProps> = () => {
        
         const getCurrentGameWeekAsync = async () => {
             try {
-                // let res = await getCurrentGameWeek();
-                // console.log(res);
-                setCurrentGameWeek(15);
-                setSelectedGameWeek(15);
+                let res = await getCurrentGameWeek();
+                setCurrentGameWeek(res!);
+                setSelectedGameWeek(res!);
             } catch (error) {
                 console.log(error);
             }
